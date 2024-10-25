@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyniki Głosowania</title>
+</head>
+<body>
+    <h2 align="center">GŁOSOWANIE I SESJA RADY SAMORZĄDU UCZNIOWSKIEGO</h2>
+    <h1>
+    GŁOSOWAŁO: <span id="liczbaGlosujacych"></span><br><br>
+    ZA: <span id="za"></span><br>
+    PRZECIW: <span id="przeciw"></span><br>
+    WSTRZYMAŁO SIĘ: <span id="wstrzymuje"></span><br>
+    </h1>
+
+    <button onclick="resetujGlosy()">Resetuj głosy</button>
+
+    <script>
+        function pokazWyniki() {
+            // Pobierz wyniki z Local Storage
+            let wyniki = JSON.parse(localStorage.getItem('wyniki')) || { za: 0, przeciw: 0, wstrzymuje: 0, liczbaGlosujacych: 0 };
+
+            // Wyświetl wyniki
+            document.getElementById('za').textContent = wyniki.za;
+            document.getElementById('przeciw').textContent = wyniki.przeciw;
+            document.getElementById('wstrzymuje').textContent = wyniki.wstrzymuje;
+            document.getElementById('liczbaGlosujacych').textContent = wyniki.liczbaGlosujacych;
+        }
+
+        function resetujGlosy() {
+            // Ustaw wyniki na zero
+            let wyniki = { za: 0, przeciw: 0, wstrzymuje: 0, liczbaGlosujacych: 0 };
+
+            // Zapisz zresetowane wyniki do Local Storage
+            localStorage.setItem('wyniki', JSON.stringify(wyniki));
+
+            // Odśwież wyświetlane wyniki
+            pokazWyniki();
+            alert('Wyniki głosowania zostały zresetowane.');
+        }
+
+        // Wczytaj wyniki po załadowaniu strony
+        window.onload = pokazWyniki;
+    </script>
+</body>
+</html>
