@@ -34,7 +34,7 @@
     // Wyświetlenie łącznej liczby głosów
     document.getElementById("totalVotes").textContent = `Łączna liczba głosów: ${totalVotes}`;
 
-    // Wyświetlenie liczby głosów dla każdej osoby
+    // Wyświetlenie liczby głosów dla każdej osoby z niepustą nazwą
     const resultsList = document.getElementById("resultsList");
     persons.forEach(person => {
       const resultItem = document.createElement("div");
