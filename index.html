@@ -1,57 +1,48 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Wyniki Głosowania</title>
-    <style>
-        .button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wyniki Głosowania</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .result {
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
-    <h2 align="center">GŁOSOWANIE I SESJA RADY SAMORZĄDU UCZNIOWSKIEGO</h2>
-    <h1>
-        GŁOSOWAŁO: <span id="liczbaGlosujacych"></span><br><br>
-        <script>
-            for (let i = 1; i <= 24; i++) {
-                document.write(`Osoba ${i}: <span id="osoba${i}"></span><br>`);
-            }
-        </script>
-    </h1>
 
-    <button class="button" onclick="resetujGlosy()">Resetuj głosy</button>
+  <h1>Wyniki Głosowania</h1>
+  <p id="totalVotes"></p>
+  <div id="resultsList"></div>
+  <p><a href="glosowanie.html">Powrót do głosowania</a></p>
 
-    <script>
-        function pokazWyniki() {
-            let wyniki = JSON.parse(localStorage.getItem('wyniki')) || {};
-            for (let i = 1; i <= 24; i++) {
-                let glosy = wyniki[`osoba${i}`] || 0;
-                document.getElementById(`osoba${i}`).textContent = glosy;
-            }
-            document.getElementById('liczbaGlosujacych').textContent = wyniki.liczbaGlosujacych || 0;
-        }
+  <script>
+    // Pobieranie wyników z localStorage
+    const persons = JSON.parse(localStorage.getItem("votes")) || [];
+    let totalVotes = 0;
 
-        function resetujGlosy() {
-            let wyniki = {};
-            for (let i = 1; i <= 24; i++) {
-                wyniki[`osoba${i}`] = 0;
-            }
-            wyniki.liczbaGlosujacych = 0;
+    // Obliczanie sumy głosów
+    persons.forEach(person => {
+      totalVotes += person.votes;
+    });
 
-            localStorage.setItem('wyniki', JSON.stringify(wyniki));
-            pokazWyniki();
-            alert('Wyniki głosowania zostały zresetowane.');
-        }
+    // Wyświetlenie łącznej liczby głosów
+    document.getElementById("totalVotes").textContent = `Łączna liczba głosów: ${totalVotes}`;
 
-        window.onload = pokazWyniki;
-    </script>
+    // Wyświetlenie liczby głosów dla każdej osoby
+    const resultsList = document.getElementById("resultsList");
+    persons.forEach(person => {
+      const resultItem = document.createElement("div");
+      resultItem.className = "result";
+      resultItem.textContent = `${person.name}: ${person.votes} głosów`;
+      resultsList.appendChild(resultItem);
+    });
+  </script>
+
 </body>
 </html>
