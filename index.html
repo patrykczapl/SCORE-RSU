@@ -3,19 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Wyniki Głosowania</title>
+    <style>
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h2 align="center">GŁOSOWANIE I SESJA RADY SAMORZĄDU UCZNIOWSKIEGO</h2>
     <h1>
-    GŁOSOWAŁO: <span id="liczbaGlosujacych"></span><br><br>
-    <script>
-        for (let i = 1; i <= 24; i++) {
-            document.write(`Osoba ${i}: <span id="osoba${i}"></span><br>`);
-        }
-    </script>
+        GŁOSOWAŁO: <span id="liczbaGlosujacych"></span><br><br>
+        <script>
+            for (let i = 1; i <= 24; i++) {
+                document.write(`Osoba ${i}: <span id="osoba${i}"></span><br>`);
+            }
+        </script>
     </h1>
 
-    <button onclick="resetujGlosy()">Resetuj głosy</button>
+    <button class="button" onclick="resetujGlosy()">Resetuj głosy</button>
 
     <script>
         function pokazWyniki() {
