@@ -9,15 +9,32 @@
       font-family: Arial, sans-serif;
       margin: 20px;
     }
+    h1 {
+      text-align: center;
+    }
+    #totalVotes {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
     .result {
-      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .result .name {
+      text-align: left;
+    }
+    .result .votes {
+      text-align: right;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <center><h1>GŁOSOWANIE SESJA NR I RADY SAMORZĄDU UCZNIOWSKIEGO</h1></center>
-  <center><h2>ZESPOŁU SZKÓŁ ENERGETYCZNYCH W GDAŃSKU</h2></center>
+  <h1>GŁOSOWANIE SESJA NR I RADY SAMORZĄDU UCZNIOWSKIEGO</h1>
   <p id="totalVotes"></p>
   <div id="resultsList"></div>
 
@@ -32,14 +49,27 @@
     });
 
     // Wyświetlenie łącznej liczby głosów
-    document.getElementById("totalVotes").textContent = `Łączna liczba głosów: ${totalVotes}`;
+    document.getElementById("totalVotes").textContent = `GŁOSOWAŁO: ${totalVotes}`;
 
     // Wyświetlenie liczby głosów dla każdej osoby z niepustą nazwą
     const resultsList = document.getElementById("resultsList");
     persons.forEach(person => {
       const resultItem = document.createElement("div");
       resultItem.className = "result";
-      resultItem.textContent = `${person.name}: ${person.votes} głosów`;
+      
+      // Element nazwy osoby
+      const nameDiv = document.createElement("div");
+      nameDiv.className = "name";
+      nameDiv.textContent = person.name;
+
+      // Element liczby głosów
+      const votesDiv = document.createElement("div");
+      votesDiv.className = "votes";
+      votesDiv.textContent = `${person.votes}`;
+
+      // Dodanie elementów do kontenera result
+      resultItem.appendChild(nameDiv);
+      resultItem.appendChild(votesDiv);
       resultsList.appendChild(resultItem);
     });
   </script>
