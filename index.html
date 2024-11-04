@@ -5,34 +5,36 @@
     <title>Wyniki Głosowania</title>
 </head>
 <body>
-    <h2 align="center">WYBÓR PRZEWODNICZĄCEGO RADY SAMORZĄDU UCZNIOWSKIEGO</h2>
+    <h2 align="center">GŁOSOWANIE I SESJA RADY SAMORZĄDU UCZNIOWSKIEGO</h2>
     <h1>
     GŁOSOWAŁO: <span id="liczbaGlosujacych"></span><br><br>
-    IMIĘ NAZWISKO<span id="osoba1"></span><br>
-    IMIĘ NAZWISKO<span id="osoba2"></span><br>
-    IMIĘ NAZWISKO<span id="osoba3"></span><br>
-    IMIĘ NAZWISKO<span id="osoba4"></span><br>
-    IMIĘ NAZWISKO<span id="osoba5"></span><br>
-    IMIĘ NAZWISKO<span id="osoba6"></span><br>
+    <script>
+        for (let i = 1; i <= 24; i++) {
+            document.write(`Osoba ${i}: <span id="osoba${i}"></span><br>`);
+        }
+    </script>
     </h1>
 
     <button onclick="resetujGlosy()">Resetuj głosy</button>
 
     <script>
         function pokazWyniki() {
-            let wyniki = JSON.parse(localStorage.getItem('wyniki')) || { osoba1: 0, osoba2: 0, osoba3: 0, liczbaGlosujacych: 0 };
-
-            document.getElementById('osoba1').textContent = wyniki.osoba1;
-            document.getElementById('osoba2').textContent = wyniki.osoba2;
-            document.getElementById('osoba3').textContent = wyniki.osoba3;
-            document.getElementById('osoba4').textContent = wyniki.osoba4;
-            document.getElementById('osoba5').textContent = wyniki.osoba5;
-            document.getElementById('osoba6').textContent = wyniki.osoba6;
-            document.getElementById('liczbaGlosujacych').textContent = wyniki.osoba1 + wyniki.osoba2 + wyniki.osoba3 + wyniki.osoba4 + wyniki.osoba5 + wyniki.osoba6;
+            let wyniki = JSON.parse(localStorage.getItem('wyniki')) || {};
+            let sum = 0;
+            for (let i = 1; i <= 24; i++) {
+                let glosy = wyniki[`osoba${i}`] || 0;
+                document.getElementById(`osoba${i}`).textContent = glosy;
+                sum += glosy;
+            }
+            document.getElementById('liczbaGlosujacych').textContent = sum;
         }
 
         function resetujGlosy() {
-            let wyniki = { osoba1: 0, osoba2: 0, osoba3: 0, osoba4: 0, osoba5: 0, osoba6: 0, liczbaGlosujacych: 0 };
+            let wyniki = {};
+            for (let i = 1; i <= 24; i++) {
+                wyniki[`osoba${i}`] = 0;
+            }
+            wyniki.liczbaGlosujacych = 0;
 
             localStorage.setItem('wyniki', JSON.stringify(wyniki));
             pokazWyniki();
