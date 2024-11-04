@@ -20,13 +20,11 @@
     <script>
         function pokazWyniki() {
             let wyniki = JSON.parse(localStorage.getItem('wyniki')) || {};
-            let sum = 0;
             for (let i = 1; i <= 24; i++) {
                 let glosy = wyniki[`osoba${i}`] || 0;
                 document.getElementById(`osoba${i}`).textContent = glosy;
-                sum += glosy;
             }
-            document.getElementById('liczbaGlosujacych').textContent = sum;
+            document.getElementById('liczbaGlosujacych').textContent = wyniki.liczbaGlosujacych || 0;
         }
 
         function resetujGlosy() {
